@@ -3,166 +3,321 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV Terminal - Backend Developer</title>
+    <title>CV Terminal Cyberpunk - Backend Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono:wght@400&display=swap');
         
         body {
-            font-family: 'JetBrains Mono', monospace;
-            background: #0d1117;
-            color: #c9d1d9;
+            font-family: 'Share Tech Mono', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 50%, #000a1a 100%);
+            color: #00ffff;
+            overflow-x: hidden;
+        }
+        
+        .cyberpunk-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 0, 0.05) 0%, transparent 50%);
+            z-index: -1;
         }
         
         .terminal-window {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ffff;
+            border-radius: 12px;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 255, 0.5),
+                inset 0 0 30px rgba(0, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
         }
         
         .terminal-header {
-            background: #21262d;
-            border-bottom: 1px solid #30363d;
-            padding: 12px 16px;
-            border-radius: 8px 8px 0 0;
+            background: linear-gradient(90deg, #001122 0%, #003344 50%, #001122 100%);
+            border-bottom: 2px solid #00ffff;
+            padding: 16px 20px;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+        
+        .terminal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            animation: scan 2s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         
         .terminal-dot {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             display: inline-block;
-            margin-right: 8px;
+            margin-right: 10px;
+            box-shadow: 0 0 10px currentColor;
         }
         
-        .dot-red { background: #ff5f56; }
-        .dot-yellow { background: #ffbd2e; }
-        .dot-green { background: #27ca3f; }
+        .dot-red { 
+            background: #ff0080; 
+            box-shadow: 0 0 15px #ff0080;
+        }
+        .dot-yellow { 
+            background: #ffff00; 
+            box-shadow: 0 0 15px #ffff00;
+        }
+        .dot-green { 
+            background: #00ff00; 
+            box-shadow: 0 0 15px #00ff00;
+        }
         
         .typing-animation {
-            border-right: 2px solid #58a6ff;
-            animation: blink 1s infinite;
+            border-right: 3px solid #00ffff;
+            animation: cyberpunk-blink 1s infinite;
         }
         
-        @keyframes blink {
-            0%, 50% { border-color: #58a6ff; }
-            51%, 100% { border-color: transparent; }
+        @keyframes cyberpunk-blink {
+            0%, 50% { 
+                border-color: #00ffff; 
+                box-shadow: 0 0 10px #00ffff;
+            }
+            51%, 100% { 
+                border-color: transparent; 
+                box-shadow: none;
+            }
         }
         
         .command-line {
-            color: #58a6ff;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            font-weight: bold;
         }
         
         .output-text {
-            color: #c9d1d9;
-            line-height: 1.6;
+            color: #00ffff;
+            line-height: 1.8;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
         }
         
-        .highlight-green { color: #7ee787; }
-        .highlight-blue { color: #58a6ff; }
-        .highlight-purple { color: #d2a8ff; }
-        .highlight-orange { color: #ffa657; }
-        .highlight-red { color: #ff7b72; }
+        .highlight-cyan { 
+            color: #00ffff; 
+            text-shadow: 0 0 10px #00ffff;
+        }
+        .highlight-magenta { 
+            color: #ff00ff; 
+            text-shadow: 0 0 10px #ff00ff;
+        }
+        .highlight-lime { 
+            color: #00ff00; 
+            text-shadow: 0 0 10px #00ff00;
+        }
+        .highlight-yellow { 
+            color: #ffff00; 
+            text-shadow: 0 0 10px #ffff00;
+        }
+        .highlight-pink { 
+            color: #ff0080; 
+            text-shadow: 0 0 10px #ff0080;
+        }
         
         .section-header {
-            color: #f0883e;
-            font-weight: 600;
-            border-bottom: 1px solid #30363d;
-            padding-bottom: 4px;
-            margin-bottom: 12px;
+            color: #ff00ff;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 1.1em;
+            border-bottom: 2px solid #ff00ff;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            text-shadow: 0 0 15px #ff00ff;
+            letter-spacing: 2px;
         }
         
-        .fade-in {
-            animation: fadeIn 0.8s ease-in-out;
+        .cyberpunk-card {
+            background: rgba(0, 20, 40, 0.8);
+            border: 1px solid #00ffff;
+            border-radius: 8px;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 255, 0.3),
+                inset 0 0 20px rgba(0, 255, 255, 0.05);
+            transition: all 0.3s ease;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .hover-glow:hover {
-            box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
-            transition: box-shadow 0.3s ease;
+        .cyberpunk-card:hover {
+            border-color: #ff00ff;
+            box-shadow: 
+                0 0 30px rgba(255, 0, 255, 0.5),
+                inset 0 0 30px rgba(255, 0, 255, 0.1);
+            transform: translateY(-2px);
         }
         
         .skill-bar {
-            background: #21262d;
-            height: 4px;
-            border-radius: 2px;
+            background: rgba(0, 0, 0, 0.8);
+            height: 6px;
+            border-radius: 3px;
             overflow: hidden;
-            margin-top: 4px;
+            margin-top: 6px;
+            border: 1px solid #003344;
         }
         
         .skill-progress {
-            background: linear-gradient(90deg, #58a6ff, #7ee787);
+            background: linear-gradient(90deg, #00ffff, #ff00ff, #00ff00);
             height: 100%;
-            border-radius: 2px;
-            animation: loadSkill 2s ease-in-out;
+            border-radius: 3px;
+            animation: loadSkill 3s ease-in-out, glow-pulse 2s infinite;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
         }
         
         @keyframes loadSkill {
             from { width: 0%; }
         }
+        
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.8); }
+            50% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.8); }
+        }
+        
+        .neon-button {
+            background: transparent;
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .neon-button:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
+            border: 1px solid;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px currentColor;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .fade-in {
+            animation: cyberpunk-fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes cyberpunk-fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px) scale(0.95);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .photo-container {
+            border: 2px solid #00ffff;
+            background: rgba(0, 20, 40, 0.8);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 255, 0.4),
+                inset 0 0 30px rgba(0, 255, 255, 0.1);
+        }
+        
+        .photo-container:hover {
+            border-color: #ff00ff;
+            box-shadow: 
+                0 0 40px rgba(255, 0, 255, 0.6),
+                inset 0 0 40px rgba(255, 0, 255, 0.1);
+        }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
+    <div class="cyberpunk-bg"></div>
+    <canvas class="matrix-rain" id="matrixCanvas"></canvas>
+    
     <div class="max-w-6xl mx-auto">
         <!-- Main Terminal Window -->
-        <div class="terminal-window fade-in hover-glow">
+        <div class="terminal-window fade-in">
             <div class="terminal-header">
                 <span class="terminal-dot dot-red"></span>
                 <span class="terminal-dot dot-yellow"></span>
                 <span class="terminal-dot dot-green"></span>
-                <span class="text-sm text-gray-400 ml-4">terminal@cv:~$</span>
+                <span class="text-sm text-cyan-400 ml-4 font-bold">root@cyberpunk-cv:~#</span>
             </div>
             
             <div class="p-6 md:p-8">
                 <!-- Header Section -->
                 <div class="mb-8">
-                    <div class="command-line mb-2">$ whoami</div>
+                    <div class="command-line mb-2">$ whoami --cyberpunk</div>
                     <div class="output-text mb-4">
-                        <div class="text-2xl md:text-3xl font-bold highlight-green mb-2">Backend Developer | Comunicación Estratégica | Diseño Digital</div>
+                        <div class="text-2xl md:text-3xl font-bold highlight-lime mb-2" style="font-family: 'Orbitron', monospace;">BACKEND DEVELOPER | DIGITAL ARCHITECT | CODE WARRIOR</div>
                         <div class="text-sm md:text-base">
-                            <span class="highlight-blue">📍</span> Ciudad de México · 
-                            <span class="highlight-blue">✉️</span> <a href="mailto:zukuntwellefanzine@gmail.com" class="highlight-orange hover:underline">zukuntwellefanzine@gmail.com</a> · 
-                            <span class="highlight-blue">📞</span> <span class="highlight-purple">+52 5610677516</span>
+                            <span class="highlight-cyan">📍</span> Neo Ciudad de México · 
+                            <span class="highlight-cyan">✉️</span> <a href="mailto:zukuntwellefanzine@gmail.com" class="highlight-yellow hover:underline">zukuntwellefanzine@gmail.com</a> · 
+                            <span class="highlight-cyan">📞</span> <span class="highlight-magenta">+52 5610677516</span>
                         </div>
                         <div class="mt-2">
-                            <span class="highlight-blue">🔗</span> <a href="https://github.com/zukunftwellefanzine" class="highlight-orange hover:underline" target="_blank">github.com/zukunftwellefanzine</a>
+                            <span class="highlight-cyan">🔗</span> <a href="https://github.com/zukunftwellefanzine" class="highlight-yellow hover:underline" target="_blank">github.com/zukunftwellefanzine</a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Photo Section -->
                 <div class="mb-8">
-                    <div class="command-line mb-2">$ display profile_picture.jpg</div>
+                    <div class="command-line mb-2">$ display neural_avatar.jpg --enhance</div>
                     <div class="output-text">
-                        <div class="section-header">📸 FOTO DE PERFIL</div>
+                        <div class="section-header">🔮 NEURAL AVATAR</div>
                         <div class="flex flex-col md:flex-row items-center gap-6">
                             <div class="relative">
-                                <div class="w-48 h-48 bg-gray-900 border-2 border-dashed border-gray-600 rounded-lg flex items-center justify-center overflow-hidden hover:border-blue-500 transition-colors">
+                                <div class="w-48 h-48 photo-container border-dashed rounded-lg flex items-center justify-center overflow-hidden transition-all duration-300">
                                     <div id="photoContainer" class="w-full h-full flex items-center justify-center">
                                         <div class="text-center">
-                                            <div class="text-4xl mb-2">👨‍💻</div>
-                                            <div class="text-sm text-gray-400">Profile Picture</div>
-                                            <div class="text-xs text-gray-500 mt-1">Click to upload</div>
+                                            <div class="text-4xl mb-2">🤖</div>
+                                            <div class="text-sm highlight-cyan">Neural Interface</div>
+                                            <div class="text-xs text-gray-400 mt-1">Upload Avatar</div>
                                         </div>
                                     </div>
-                                    <img id="profileImage" class="w-full h-full object-cover hidden" alt="Profile Picture">
+                                    <img id="profileImage" class="w-full h-full object-cover hidden" alt="Cyberpunk Avatar">
                                 </div>
                                 <input type="file" id="photoInput" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
                             </div>
                             <div class="flex-1">
-                                <div class="p-4 bg-gray-900 rounded border-l-4 border-green-500">
+                                <div class="cyberpunk-card p-4 border-l-4 border-lime-400">
                                     <div class="text-sm space-y-2">
-                                        <div class="highlight-green">📁 Formatos soportados:</div>
-                                        <div class="text-xs text-gray-400">JPG, PNG, GIF, WebP</div>
-                                        <div class="highlight-blue mt-3">💡 Tip:</div>
-                                        <div class="text-xs text-gray-400">Usa una imagen cuadrada para mejor resultado</div>
-                                        <div class="highlight-purple mt-3">🎯 Recomendación:</div>
-                                        <div class="text-xs text-gray-400">Foto profesional o avatar que represente tu estilo</div>
+                                        <div class="highlight-lime">📁 Compatible Formats:</div>
+                                        <div class="text-xs text-gray-300">JPG, PNG, GIF, WebP</div>
+                                        <div class="highlight-cyan mt-3">💡 Enhancement Tip:</div>
+                                        <div class="text-xs text-gray-300">Square format for optimal neural processing</div>
+                                        <div class="highlight-magenta mt-3">🎯 Style Guide:</div>
+                                        <div class="text-xs text-gray-300">Cyberpunk aesthetic recommended</div>
                                     </div>
                                 </div>
                             </div>
@@ -172,50 +327,50 @@
 
                 <!-- Professional Summary -->
                 <div class="mb-8">
-                    <div class="command-line mb-2">$ cat profile.md</div>
+                    <div class="command-line mb-2">$ cat neural_profile.md --decrypt</div>
                     <div class="output-text">
-                        <div class="section-header">🔹 RESUMEN PROFESIONAL</div>
-                        <p>Desarrolladora Full Stack con más de <span class="highlight-green">10 años de experiencia</span> en medios, comunicación organizacional y arte digital. He trabajado en empresas privadas, gobiernos y organizaciones sociales, integrando <span class="highlight-blue">desarrollo backend y frontend</span> con diseño estratégico.</p>
-                        <p class="mt-3">Manejo tecnologías como <span class="highlight-purple">Python, Java, SQL, REST APIs, React, Supabase</span> y <span class="highlight-orange">Figma</span>. Mi enfoque es crear soluciones digitales funcionales y con identidad, priorizando <span class="highlight-green">accesibilidad, diversidad y buenas prácticas</span>.</p>
+                        <div class="section-header">⚡ DIGITAL CONSCIOUSNESS PROFILE</div>
+                        <p>Full Stack Code Architect con más de <span class="highlight-lime">10 años navegando la matrix</span> de medios digitales, comunicación neural y arte cibernético. He operado en corporaciones, sistemas gubernamentales y redes underground, fusionando <span class="highlight-cyan">desarrollo backend y frontend</span> con diseño estratégico.</p>
+                        <p class="mt-3">Domino tecnologías como <span class="highlight-magenta">Python, Java, SQL, REST APIs, React, Supabase</span> y <span class="highlight-yellow">Figma</span>. Mi protocolo es crear soluciones digitales funcionales con identidad única, priorizando <span class="highlight-lime">accesibilidad, diversidad y código limpio</span>.</p>
                     </div>
                 </div>
 
                 <!-- Experience Section -->
                 <div class="mb-8">
-                    <div class="command-line mb-2">$ ls -la experience/</div>
+                    <div class="command-line mb-2">$ ls -la /corporate/experience/ --neon</div>
                     <div class="output-text">
-                        <div class="section-header">🟦 EXPERIENCIA LABORAL</div>
+                        <div class="section-header">🏢 CORPORATE INFILTRATION LOG</div>
                         
-                        <div class="mb-6 p-4 bg-gray-900 rounded border-l-4 border-green-500">
-                            <div class="highlight-green font-semibold">Omicron Transformación Digital</div>
-                            <div class="highlight-blue text-sm">Project Manager / Desarrolladora – 2024 - Actualidad</div>
+                        <div class="mb-6 cyberpunk-card p-4 border-l-4 border-lime-400">
+                            <div class="highlight-lime font-semibold">Omicron Transformación Digital</div>
+                            <div class="highlight-cyan text-sm">Project Manager / Code Architect – 2024 - ACTIVE</div>
                             <ul class="mt-2 text-sm space-y-1">
-                                <li>• Coordinación de equipos multidisciplinarios para el diseño y entrega de plataformas web</li>
-                                <li>• Supervisión técnica de herramientas educativas y de inclusión digital</li>
+                                <li>• Coordinación de equipos multidisciplinarios para arquitectura de plataformas web</li>
+                                <li>• Supervisión técnica de herramientas educativas y sistemas de inclusión digital</li>
                             </ul>
                         </div>
 
-                        <div class="mb-6 p-4 bg-gray-900 rounded border-l-4 border-blue-500">
-                            <div class="highlight-green font-semibold">Cave Electromecánica SA de CV</div>
-                            <div class="highlight-blue text-sm">Comunicación Organizacional – 2022 - 2024</div>
+                        <div class="mb-6 cyberpunk-card p-4 border-l-4 border-cyan-400">
+                            <div class="highlight-lime font-semibold">Cave Electromecánica SA de CV</div>
+                            <div class="highlight-cyan text-sm">Neural Communication Specialist – 2022 - 2024</div>
                             <ul class="mt-2 text-sm space-y-1">
                                 <li>• Estrategia de comunicación interna/externa y diseño de identidad visual</li>
                                 <li>• Gestión de contenidos digitales y materiales corporativos</li>
                             </ul>
                         </div>
 
-                        <div class="mb-6 p-4 bg-gray-900 rounded border-l-4 border-purple-500">
-                            <div class="highlight-green font-semibold">BA Electromecánicos SA de CV</div>
-                            <div class="highlight-blue text-sm">Comunicación Organizacional – 2015 - 2022</div>
+                        <div class="mb-6 cyberpunk-card p-4 border-l-4 border-magenta-400">
+                            <div class="highlight-lime font-semibold">BA Electromecánicos SA de CV</div>
+                            <div class="highlight-cyan text-sm">Digital Communications Operative – 2015 - 2022</div>
                             <ul class="mt-2 text-sm space-y-1">
                                 <li>• Implementación de medios internos y cultura organizacional</li>
                                 <li>• Campañas informativas y editoriales digitales</li>
                             </ul>
                         </div>
 
-                        <div class="mb-6 p-4 bg-gray-900 rounded border-l-4 border-orange-500">
-                            <div class="highlight-green font-semibold">Alcaldía Álvaro Obregón – Desarrollo Social</div>
-                            <div class="highlight-blue text-sm">Atención Ciudadana – 2018 - 2021</div>
+                        <div class="mb-6 cyberpunk-card p-4 border-l-4 border-yellow-400">
+                            <div class="highlight-lime font-semibold">Alcaldía Álvaro Obregón – Desarrollo Social</div>
+                            <div class="highlight-cyan text-sm">Citizen Interface Specialist – 2018 - 2021</div>
                             <ul class="mt-2 text-sm space-y-1">
                                 <li>• Apoyo directo a población en situación de vulnerabilidad</li>
                                 <li>• Gestión de programas sociales y campañas institucionales</li>
@@ -226,29 +381,29 @@
 
                 <!-- Education Section -->
                 <div class="mb-8">
-                    <div class="command-line mb-2">$ cat education.json</div>
+                    <div class="command-line mb-2">$ cat /education/neural_training.json --enhanced</div>
                     <div class="output-text">
-                        <div class="section-header">🟦 EDUCACIÓN FORMAL</div>
+                        <div class="section-header">🎓 NEURAL ENHANCEMENT PROTOCOLS</div>
                         
                         <div class="space-y-4">
-                            <div class="p-3 bg-gray-900 rounded">
-                                <div class="highlight-purple font-semibold">Maestría en Comunicación e Identidad Corporativa</div>
-                                <div class="text-sm highlight-blue">Universidad Internacional de La Rioja | 2020 - 2021</div>
+                            <div class="cyberpunk-card p-3">
+                                <div class="highlight-magenta font-semibold">Maestría en Comunicación e Identidad Corporativa</div>
+                                <div class="text-sm highlight-cyan">Universidad Internacional de La Rioja | 2020 - 2021</div>
                             </div>
                             
-                            <div class="p-3 bg-gray-900 rounded">
-                                <div class="highlight-purple font-semibold">Maestría en Diseño y Creatividad Digital</div>
-                                <div class="text-sm highlight-blue">Centro Universitario de la Comunicación | 2016 - 2017</div>
+                            <div class="cyberpunk-card p-3">
+                                <div class="highlight-magenta font-semibold">Maestría en Diseño y Creatividad Digital</div>
+                                <div class="text-sm highlight-cyan">Centro Universitario de la Comunicación | 2016 - 2017</div>
                             </div>
                             
-                            <div class="p-3 bg-gray-900 rounded">
-                                <div class="highlight-purple font-semibold">Ingeniería en Software</div>
-                                <div class="text-sm highlight-blue">Universidad de la Ciudad de México | 2016 - 2021</div>
+                            <div class="cyberpunk-card p-3">
+                                <div class="highlight-magenta font-semibold">Ingeniería en Software</div>
+                                <div class="text-sm highlight-cyan">Universidad de la Ciudad de México | 2016 - 2021</div>
                             </div>
                             
-                            <div class="p-3 bg-gray-900 rounded">
-                                <div class="highlight-purple font-semibold">Licenciatura en Ciencias de la Comunicación</div>
-                                <div class="text-sm highlight-blue">Universidad del Valle de México | 2006 - 2009</div>
+                            <div class="cyberpunk-card p-3">
+                                <div class="highlight-magenta font-semibold">Licenciatura en Ciencias de la Comunicación</div>
+                                <div class="text-sm highlight-cyan">Universidad del Valle de México | 2006 - 2009</div>
                             </div>
                         </div>
                     </div>
@@ -256,47 +411,47 @@
 
                 <!-- Technical Skills -->
                 <div class="mb-8">
-                    <div class="command-line mb-2">$ ./skills --list</div>
+                    <div class="command-line mb-2">$ ./neural_skills.exe --matrix-mode</div>
                     <div class="output-text">
-                        <div class="section-header">🟣 HABILIDADES TÉCNICAS</div>
+                        <div class="section-header">⚡ CYBERNETIC ABILITIES</div>
                         
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <div class="mb-4">
-                                    <div class="highlight-green font-semibold mb-2">Backend & Databases</div>
+                                    <div class="highlight-lime font-semibold mb-2">Backend & Neural Networks</div>
                                     <div class="space-y-2">
                                         <div>
-                                            <span class="highlight-blue">Python</span>
+                                            <span class="highlight-cyan">Python</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
                                         </div>
                                         <div>
-                                            <span class="highlight-blue">Java</span>
+                                            <span class="highlight-cyan">Java</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 85%"></div></div>
                                         </div>
                                         <div>
-                                            <span class="highlight-blue">SQL / PostgreSQL</span>
+                                            <span class="highlight-cyan">SQL / PostgreSQL</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div>
                                         </div>
                                         <div>
-                                            <span class="highlight-blue">REST APIs</span>
+                                            <span class="highlight-cyan">REST APIs</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-4">
-                                    <div class="highlight-green font-semibold mb-2">Frontend & Frameworks</div>
+                                    <div class="highlight-lime font-semibold mb-2">Frontend & Interface Design</div>
                                     <div class="space-y-2">
                                         <div>
-                                            <span class="highlight-purple">React</span>
+                                            <span class="highlight-magenta">React</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 85%"></div></div>
                                         </div>
                                         <div>
-                                            <span class="highlight-purple">JavaScript</span>
+                                            <span class="highlight-magenta">JavaScript</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div>
                                         </div>
                                         <div>
-                                            <span class="highlight-purple">HTML/CSS</span>
+                                            <span class="highlight-magenta">HTML/CSS</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
                                         </div>
                                     </div>
@@ -305,32 +460,32 @@
                             
                             <div>
                                 <div class="mb-4">
-                                    <div class="highlight-green font-semibold mb-2">Tools & DevOps</div>
+                                    <div class="highlight-lime font-semibold mb-2">DevOps & System Control</div>
                                     <div class="space-y-2">
                                         <div>
-                                            <span class="highlight-orange">Git / GitHub</span>
+                                            <span class="highlight-yellow">Git / GitHub</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
                                         </div>
                                         <div>
-                                            <span class="highlight-orange">Docker</span>
+                                            <span class="highlight-yellow">Docker</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 75%"></div></div>
                                         </div>
                                         <div>
-                                            <span class="highlight-orange">Supabase</span>
+                                            <span class="highlight-yellow">Supabase</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 80%"></div></div>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-4">
-                                    <div class="highlight-green font-semibold mb-2">Design & Multimedia</div>
+                                    <div class="highlight-lime font-semibold mb-2">Visual Design Matrix</div>
                                     <div class="space-y-2">
                                         <div>
-                                            <span class="highlight-red">Figma</span>
+                                            <span class="highlight-pink">Figma</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 85%"></div></div>
                                         </div>
                                         <div>
-                                            <span class="highlight-red">Adobe Creative Suite</span>
+                                            <span class="highlight-pink">Adobe Creative Suite</span>
                                             <div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div>
                                         </div>
                                     </div>
@@ -342,72 +497,72 @@
 
                 <!-- Projects Section -->
                 <div class="mb-8">
-                    <div class="command-line mb-2">$ git log --oneline projects/</div>
+                    <div class="command-line mb-2">$ git log --oneline /projects/cyberpunk/ --neon</div>
                     <div class="output-text">
-                        <div class="section-header">💼 WORK / PROJECTS EXPERIENCE</div>
+                        <div class="section-header">💾 DIGITAL ARTIFACTS / PROJECT MATRIX</div>
                         
                         <div class="space-y-4">
-                            <div class="p-4 bg-gray-900 rounded border-l-4 border-blue-500 hover:bg-gray-800 transition-colors">
+                            <div class="cyberpunk-card p-4 border-l-4 border-cyan-400 hover:bg-gray-800 transition-colors">
                                 <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                                    <div class="highlight-green font-semibold">Library Manager</div>
+                                    <div class="highlight-lime font-semibold">Library Manager</div>
                                     <div class="flex space-x-2 text-sm">
-                                        <span class="bg-blue-600 px-2 py-1 rounded text-xs">Java</span>
-                                        <span class="bg-purple-600 px-2 py-1 rounded text-xs">SQL</span>
-                                        <span class="bg-gray-600 px-2 py-1 rounded text-xs">Docker</span>
+                                        <span class="tech-badge border-cyan-400 text-cyan-400">Java</span>
+                                        <span class="tech-badge border-magenta-400 text-magenta-400">SQL</span>
+                                        <span class="tech-badge border-gray-400 text-gray-300">Docker</span>
                                     </div>
                                 </div>
                                 <p class="text-sm mb-3">CRUD completo, Swagger/OpenAPI, JUnit tests, deploy local con Docker.</p>
                                 <div class="flex space-x-4 text-xs">
-                                    <a href="#" onclick="openRepo('library-manager')" class="highlight-blue hover:underline">📂 Repository</a>
-                                    <a href="#" onclick="openDemo('library-manager')" class="highlight-orange hover:underline">🚀 Demo</a>
+                                    <a href="#" onclick="openRepo('library-manager')" class="highlight-cyan hover:underline">📂 Repository</a>
+                                    <a href="#" onclick="openDemo('library-manager')" class="highlight-yellow hover:underline">🚀 Demo</a>
                                 </div>
                             </div>
 
-                            <div class="p-4 bg-gray-900 rounded border-l-4 border-green-500 hover:bg-gray-800 transition-colors">
+                            <div class="cyberpunk-card p-4 border-l-4 border-lime-400 hover:bg-gray-800 transition-colors">
                                 <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                                    <div class="highlight-green font-semibold">Convertidor de Divisas</div>
+                                    <div class="highlight-lime font-semibold">Convertidor de Divisas</div>
                                     <div class="flex space-x-2 text-sm">
-                                        <span class="bg-green-600 px-2 py-1 rounded text-xs">Express</span>
-                                        <span class="bg-blue-600 px-2 py-1 rounded text-xs">TypeScript</span>
-                                        <span class="bg-yellow-600 px-2 py-1 rounded text-xs">CI/CD</span>
+                                        <span class="tech-badge border-lime-400 text-lime-400">Express</span>
+                                        <span class="tech-badge border-cyan-400 text-cyan-400">TypeScript</span>
+                                        <span class="tech-badge border-yellow-400 text-yellow-400">CI/CD</span>
                                     </div>
                                 </div>
                                 <p class="text-sm mb-3">Microservicio REST con validación Zod, caching en memoria, Jest tests + CI/CD en GitHub Actions.</p>
                                 <div class="flex space-x-4 text-xs">
-                                    <a href="#" onclick="openRepo('currency-converter')" class="highlight-blue hover:underline">📂 Repository</a>
-                                    <a href="#" onclick="openDemo('currency-converter')" class="highlight-orange hover:underline">🚀 Demo</a>
+                                    <a href="#" onclick="openRepo('currency-converter')" class="highlight-cyan hover:underline">📂 Repository</a>
+                                    <a href="#" onclick="openDemo('currency-converter')" class="highlight-yellow hover:underline">🚀 Demo</a>
                                 </div>
                             </div>
 
-                            <div class="p-4 bg-gray-900 rounded border-l-4 border-yellow-500 hover:bg-gray-800 transition-colors">
+                            <div class="cyberpunk-card p-4 border-l-4 border-yellow-400 hover:bg-gray-800 transition-colors">
                                 <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                                    <div class="highlight-green font-semibold">Amazon Tracker</div>
+                                    <div class="highlight-lime font-semibold">Amazon Tracker</div>
                                     <div class="flex space-x-2 text-sm">
-                                        <span class="bg-yellow-600 px-2 py-1 rounded text-xs">Python</span>
-                                        <span class="bg-red-600 px-2 py-1 rounded text-xs">Scraping</span>
-                                        <span class="bg-green-600 px-2 py-1 rounded text-xs">API</span>
+                                        <span class="tech-badge border-yellow-400 text-yellow-400">Python</span>
+                                        <span class="tech-badge border-pink-400 text-pink-400">Scraping</span>
+                                        <span class="tech-badge border-lime-400 text-lime-400">API</span>
                                     </div>
                                 </div>
                                 <p class="text-sm mb-3">Integración con scraping/API, endpoints de consulta, pytest.</p>
                                 <div class="flex space-x-4 text-xs">
-                                    <a href="#" onclick="openRepo('amazon-tracker')" class="highlight-blue hover:underline">📂 Repository</a>
-                                    <a href="#" onclick="openDemo('amazon-tracker')" class="highlight-orange hover:underline">🚀 Demo</a>
+                                    <a href="#" onclick="openRepo('amazon-tracker')" class="highlight-cyan hover:underline">📂 Repository</a>
+                                    <a href="#" onclick="openDemo('amazon-tracker')" class="highlight-yellow hover:underline">🚀 Demo</a>
                                 </div>
                             </div>
 
-                            <div class="p-4 bg-gray-900 rounded border-l-4 border-purple-500 hover:bg-gray-800 transition-colors">
+                            <div class="cyberpunk-card p-4 border-l-4 border-magenta-400 hover:bg-gray-800 transition-colors">
                                 <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                                    <div class="highlight-green font-semibold">Blockchain Simple</div>
+                                    <div class="highlight-lime font-semibold">Blockchain Simple</div>
                                     <div class="flex space-x-2 text-sm">
-                                        <span class="bg-yellow-600 px-2 py-1 rounded text-xs">Python</span>
-                                        <span class="bg-purple-600 px-2 py-1 rounded text-xs">Blockchain</span>
-                                        <span class="bg-red-600 px-2 py-1 rounded text-xs">Security</span>
+                                        <span class="tech-badge border-yellow-400 text-yellow-400">Python</span>
+                                        <span class="tech-badge border-magenta-400 text-magenta-400">Blockchain</span>
+                                        <span class="tech-badge border-pink-400 text-pink-400">Security</span>
                                     </div>
                                 </div>
                                 <p class="text-sm mb-3">Prototipo educativo con arquitectura de cadena, seguridad básica.</p>
                                 <div class="flex space-x-4 text-xs">
-                                    <a href="#" onclick="openRepo('simple-blockchain')" class="highlight-blue hover:underline">📂 Repository</a>
-                                    <a href="#" onclick="openDemo('simple-blockchain')" class="highlight-orange hover:underline">🚀 Demo</a>
+                                    <a href="#" onclick="openRepo('simple-blockchain')" class="highlight-cyan hover:underline">📂 Repository</a>
+                                    <a href="#" onclick="openDemo('simple-blockchain')" class="highlight-yellow hover:underline">🚀 Demo</a>
                                 </div>
                             </div>
                         </div>
@@ -416,55 +571,55 @@
 
                 <!-- Extras / Interests Section -->
                 <div class="mb-8">
-                    <div class="command-line mb-2">$ cat interests.txt</div>
+                    <div class="command-line mb-2">$ cat /neural/interests.txt --decrypt</div>
                     <div class="output-text">
-                        <div class="section-header">✨ EXTRAS / INTERESTS</div>
+                        <div class="section-header">🌐 NEURAL NETWORK EXTENSIONS</div>
                         
                         <div class="grid md:grid-cols-2 gap-6">
                             <div class="space-y-4">
-                                <div class="p-4 bg-gray-900 rounded">
-                                    <div class="highlight-purple font-semibold mb-2">🦀 Exploración Técnica</div>
+                                <div class="cyberpunk-card p-4">
+                                    <div class="highlight-magenta font-semibold mb-2">🦀 Advanced Code Exploration</div>
                                     <div class="text-sm space-y-1">
-                                        <div>• <span class="highlight-orange">Rust</span> - Algoritmos básicos y performance</div>
-                                        <div>• <span class="highlight-blue">C++</span> - Estructuras de datos fundamentales</div>
-                                        <div>• <span class="highlight-green">Algoritmos</span> - Optimización y complejidad</div>
+                                        <div>• <span class="highlight-yellow">Rust</span> - Algoritmos de alta performance</div>
+                                        <div>• <span class="highlight-cyan">C++</span> - Estructuras de datos fundamentales</div>
+                                        <div>• <span class="highlight-lime">Algorithms</span> - Optimización y complejidad</div>
                                     </div>
                                 </div>
                                 
-                                <div class="p-4 bg-gray-900 rounded">
-                                    <div class="highlight-green font-semibold mb-2">🏛️ Innovación Pública</div>
+                                <div class="cyberpunk-card p-4">
+                                    <div class="highlight-lime font-semibold mb-2">🏛️ Digital Government Innovation</div>
                                     <div class="text-sm">
-                                        Interés en <span class="highlight-blue">innovación tecnológica en sector público</span>, 
+                                        Interés en <span class="highlight-cyan">innovación tecnológica en sector público</span>, 
                                         gobierno digital y herramientas de inclusión social.
                                     </div>
                                 </div>
                             </div>
                             
                             <div class="space-y-4">
-                                <div class="p-4 bg-gray-900 rounded">
-                                    <div class="highlight-red font-semibold mb-2">🎨 Proyectos Creativos</div>
+                                <div class="cyberpunk-card p-4">
+                                    <div class="highlight-pink font-semibold mb-2">🎨 Creative Digital Artifacts</div>
                                     <div class="text-sm space-y-2">
                                         <div class="flex items-center justify-between">
-                                            <span>• <span class="highlight-purple">Patsygram</span></span>
-                                            <a href="#" onclick="openCreativeProject('patsygram')" class="highlight-blue hover:underline text-xs">Ver →</a>
+                                            <span>• <span class="highlight-magenta">Patsygram</span></span>
+                                            <a href="#" onclick="openCreativeProject('patsygram')" class="highlight-cyan hover:underline text-xs">Access →</a>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <span>• <span class="highlight-orange">Fanzine LGBT</span></span>
-                                            <a href="#" onclick="openCreativeProject('fanzine')" class="highlight-blue hover:underline text-xs">Ver →</a>
+                                            <span>• <span class="highlight-yellow">Fanzine LGBT</span></span>
+                                            <a href="#" onclick="openCreativeProject('fanzine')" class="highlight-cyan hover:underline text-xs">Access →</a>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <span>• <span class="highlight-green">Blog Meditación</span></span>
-                                            <a href="#" onclick="openCreativeProject('meditation')" class="highlight-blue hover:underline text-xs">Ver →</a>
+                                            <span>• <span class="highlight-lime">Blog Meditación</span></span>
+                                            <a href="#" onclick="openCreativeProject('meditation')" class="highlight-cyan hover:underline text-xs">Access →</a>
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <div class="p-4 bg-gray-900 rounded">
-                                    <div class="highlight-blue font-semibold mb-2">🌟 Filosofía de Trabajo</div>
+                                <div class="cyberpunk-card p-4">
+                                    <div class="highlight-cyan font-semibold mb-2">🌟 Code Philosophy</div>
                                     <div class="text-sm">
-                                        Enfoque en <span class="highlight-green">accesibilidad</span>, 
-                                        <span class="highlight-purple">diversidad</span> y 
-                                        <span class="highlight-orange">buenas prácticas</span> de desarrollo.
+                                        Enfoque en <span class="highlight-lime">accesibilidad</span>, 
+                                        <span class="highlight-magenta">diversidad</span> y 
+                                        <span class="highlight-yellow">código limpio</span>.
                                     </div>
                                 </div>
                             </div>
@@ -474,20 +629,20 @@
 
                 <!-- Interactive Commands -->
                 <div class="mb-6">
-                    <div class="command-line mb-2">$ help</div>
+                    <div class="command-line mb-2">$ help --cyberpunk-mode</div>
                     <div class="output-text text-sm">
                         <div class="grid md:grid-cols-3 gap-4">
-                            <button onclick="showContact()" class="p-3 bg-gray-900 rounded hover:bg-gray-800 transition-colors text-left">
-                                <div class="highlight-blue">contact</div>
-                                <div class="text-xs text-gray-400">Mostrar información de contacto</div>
+                            <button onclick="showContact()" class="neon-button text-left">
+                                <div class="highlight-cyan">contact</div>
+                                <div class="text-xs text-gray-400">Neural link information</div>
                             </button>
-                            <button onclick="showProjects()" class="p-3 bg-gray-900 rounded hover:bg-gray-800 transition-colors text-left">
-                                <div class="highlight-green">projects</div>
-                                <div class="text-xs text-gray-400">Ver proyectos destacados</div>
+                            <button onclick="showProjects()" class="neon-button text-left">
+                                <div class="highlight-lime">projects</div>
+                                <div class="text-xs text-gray-400">Digital artifact showcase</div>
                             </button>
-                            <button onclick="downloadCV()" class="p-3 bg-gray-900 rounded hover:bg-gray-800 transition-colors text-left">
-                                <div class="highlight-purple">download</div>
-                                <div class="text-xs text-gray-400">Descargar CV en PDF</div>
+                            <button onclick="downloadCV()" class="neon-button text-left">
+                                <div class="highlight-magenta">download</div>
+                                <div class="text-xs text-gray-400">Export neural profile</div>
                             </button>
                         </div>
                     </div>
@@ -495,40 +650,66 @@
 
                 <!-- Terminal Prompt -->
                 <div class="flex items-center">
-                    <span class="command-line mr-2">$</span>
+                    <span class="command-line mr-2">root@cyberpunk-cv:~#</span>
                     <span class="typing-animation">_</span>
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="text-center mt-8 text-gray-500 text-sm">
-            <p>© 2024 - Desarrollado con ❤️ y mucho ☕</p>
+        <div class="text-center mt-8 text-cyan-400 text-sm">
+            <p>© 2024 - Forged in the digital underground with ⚡ and endless ☕</p>
         </div>
     </div>
 
     <script>
-        // Terminal typing effect
-        function typeText(element, text, speed = 50) {
-            element.innerHTML = '';
-            let i = 0;
-            const timer = setInterval(() => {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(timer);
+        // Matrix rain effect
+        function initMatrixRain() {
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+            const matrixArray = matrix.split("");
+            
+            const fontSize = 10;
+            const columns = canvas.width / fontSize;
+            
+            const drops = [];
+            for(let x = 0; x < columns; x++) {
+                drops[x] = 1;
+            }
+            
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#00ffff';
+                ctx.font = fontSize + 'px monospace';
+                
+                for(let i = 0; i < drops.length; i++) {
+                    const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
                 }
-            }, speed);
+            }
+            
+            setInterval(draw, 35);
         }
 
         // Interactive commands
         function showContact() {
-            alert('📧 Email: zukuntwellefanzine@gmail.com\n📞 Teléfono: +52 5610677516\n🔗 GitHub: github.com/zukunftwellefanzine');
+            alert('🔗 NEURAL LINK ESTABLISHED\n\n📧 Email: zukuntwellefanzine@gmail.com\n📞 Signal: +52 5610677516\n🔗 GitHub: github.com/zukunftwellefanzine\n\n[CONNECTION SECURE]');
         }
 
         function showProjects() {
-            alert('🚀 Proyectos destacados:\n\n• Library Manager (Java + SQL + Docker)\n• Convertidor de Divisas (Express + TypeScript)\n• Amazon Tracker (Python + Scraping)\n• Blockchain Simple (Python + Security)');
+            alert('🚀 DIGITAL ARTIFACTS ACCESSED:\n\n• Library Manager (Java + SQL + Docker)\n• Convertidor de Divisas (Express + TypeScript)\n• Amazon Tracker (Python + Scraping)\n• Blockchain Simple (Python + Security)\n\n[DATA STREAM COMPLETE]');
         }
 
         // Project repository and demo functions
@@ -541,9 +722,9 @@
             };
             
             if (repos[project]) {
-                alert(`🔗 Abriendo repositorio: ${repos[project]}\n\n(En un entorno real, esto abriría el enlace)`);
+                alert(`🔗 ACCESSING REPOSITORY:\n${repos[project]}\n\n[NEURAL LINK ESTABLISHED]\n(En un entorno real, esto abriría el enlace)`);
             } else {
-                alert('📂 Repositorio disponible próximamente');
+                alert('📂 REPOSITORY ENCRYPTION IN PROGRESS...\nACCESS GRANTED SOON');
             }
         }
 
@@ -556,9 +737,9 @@
             };
             
             if (demos[project]) {
-                alert(`🚀 Demo: ${demos[project]}\n\n(En un entorno real, esto abriría la demo)`);
+                alert(`🚀 DEMO INTERFACE LOADING:\n${demos[project]}\n\n[CYBERPUNK MODE ACTIVATED]\n(En un entorno real, esto abriría la demo)`);
             } else {
-                alert('🚀 Demo disponible próximamente');
+                alert('🚀 DEMO COMPILATION IN PROGRESS...\nLAUNCH SEQUENCE INITIATED');
             }
         }
 
@@ -570,37 +751,15 @@
             };
             
             if (projects[project]) {
-                alert(`🎨 ${projects[project]}\n\n(En un entorno real, esto abriría el proyecto)`);
+                alert(`🎨 CREATIVE MATRIX ACCESSED:\n${projects[project]}\n\n[ARTISTIC NEURAL NETWORK ONLINE]\n(En un entorno real, esto abriría el proyecto)`);
             } else {
-                alert('🎨 Proyecto creativo disponible próximamente');
+                alert('🎨 CREATIVE SUBROUTINES LOADING...\nARTISTIC INTERFACE COMING ONLINE');
             }
         }
 
         function downloadCV() {
-            alert('📄 Función de descarga disponible próximamente.\n\nPor ahora puedes contactarme directamente para solicitar mi CV completo.');
+            alert('📄 NEURAL PROFILE EXPORT INITIATED...\n\nDOWNLOAD PROTOCOLS ACTIVATING\n\nPor ahora puedes contactarme directamente para solicitar mi CV completo.\n\n[CYBERPUNK TRANSMISSION COMPLETE]');
         }
-
-        // Add some interactive terminal effects
-        document.addEventListener('DOMContentLoaded', function() {
-            // Simulate terminal loading
-            setTimeout(() => {
-                const cursor = document.querySelector('.typing-animation');
-                if (cursor) {
-                    cursor.style.animation = 'blink 1s infinite';
-                }
-            }, 1000);
-
-            // Add click effects to terminal window
-            document.querySelector('.terminal-window').addEventListener('click', function() {
-                const cursor = document.querySelector('.typing-animation');
-                if (cursor) {
-                    cursor.style.borderColor = '#7ee787';
-                    setTimeout(() => {
-                        cursor.style.borderColor = '#58a6ff';
-                    }, 200);
-                }
-            });
-        });
 
         // Photo upload functionality
         document.getElementById('photoInput').addEventListener('change', function(e) {
@@ -615,11 +774,13 @@
                     img.classList.remove('hidden');
                     container.classList.add('hidden');
                     
-                    // Add a subtle animation
+                    // Cyberpunk animation
                     img.style.opacity = '0';
+                    img.style.filter = 'hue-rotate(0deg) saturate(1.5) brightness(1.2)';
                     setTimeout(() => {
-                        img.style.transition = 'opacity 0.5s ease-in-out';
+                        img.style.transition = 'opacity 0.8s ease-in-out, filter 0.8s ease-in-out';
                         img.style.opacity = '1';
+                        img.style.filter = 'hue-rotate(180deg) saturate(1.8) brightness(1.1)';
                     }, 100);
                 };
                 reader.readAsDataURL(file);
@@ -631,7 +792,33 @@
             document.getElementById('photoInput').click();
         });
 
-        // Keyboard shortcuts
+        // Initialize effects
+        document.addEventListener('DOMContentLoaded', function() {
+            initMatrixRain();
+            
+            // Cyberpunk cursor effect
+            setTimeout(() => {
+                const cursor = document.querySelector('.typing-animation');
+                if (cursor) {
+                    cursor.style.animation = 'cyberpunk-blink 1s infinite';
+                }
+            }, 1000);
+
+            // Terminal click effects
+            document.querySelector('.terminal-window').addEventListener('click', function() {
+                const cursor = document.querySelector('.typing-animation');
+                if (cursor) {
+                    cursor.style.borderColor = '#00ff00';
+                    cursor.style.boxShadow = '0 0 15px #00ff00';
+                    setTimeout(() => {
+                        cursor.style.borderColor = '#00ffff';
+                        cursor.style.boxShadow = '0 0 10px #00ffff';
+                    }, 300);
+                }
+            });
+        });
+
+        // Cyberpunk keyboard shortcuts
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && e.key === 'c') {
                 e.preventDefault();
@@ -639,8 +826,17 @@
             } else if (e.ctrlKey && e.key === 'p') {
                 e.preventDefault();
                 showProjects();
+            } else if (e.key === 'Escape') {
+                alert('🔒 NEURAL INTERFACE LOCKED\n\n[CYBERPUNK MODE SECURED]');
             }
         });
+
+        // Resize matrix canvas
+        window.addEventListener('resize', function() {
+            const canvas = document.getElementById('matrixCanvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97d272ce81bc64b0',t:'MTc1NzU0NDI1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97d28263d3f664b0',t:'MTc1NzU0NDg4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
